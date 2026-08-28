@@ -19,17 +19,17 @@ Skills are markdown files that give AI agents specialised knowledge and workflow
 Every skill reads shared context. The `voice-builder` skill is the foundation. Every other skill checks it first (via `about-me.md` and `voice.md`) before drafting a line.
 
 ```
-                    ┌──────────────────────────────────────┐
+                    ┌──────────────────────────────────┐
                     │           voice-builder              │
                     │   about-me.md + voice.md             │
                     │   (read by every skill below)        │
-                    └──────────────────┬───────────────────┘
+                    └──────────────────┬───────────────┘
                                        │
-                    ┌──────────────────▼───────────────────┐
+                    ┌──────────────────▼───────────────┐
                     │         newsletter-voice             │
                     │   newsletter-voice.md                │
                     │   (the source every piece comes from)│
-                    └──────────────────┬───────────────────┘
+                    └──────────────────┬───────────────┘
                                        │
      ┌────────────┬────────────┬───────┴───────┬────────────┬────────────┐
      ▼            ▼            ▼               ▼            ▼            ▼
@@ -41,8 +41,8 @@ Every skill reads shared context. The `voice-builder` skill is the foundation. E
 │ optimizer│ │ writer   │ │ scripting│ │              │ │ comment  │ │content-  │
 │          │ │graphic-  │ │youtube-  │ │analytics-    │ │          │ │ matrix   │
 │          │ │ designer │ │ thumbnail│ │ dashboard    │ │          │ │niche-    │
-│          │ │          │ │          │ │              │ │          │ │ research │
-│          │ │post-form │ │          │ │              │ │          │ │gemini-*  │
+│          │ │          │ │instagram-│ │              │ │          │ │ research │
+│          │ │post-form │ │ scout    │ │              │ │          │ │gemini-*  │
 │          │ │          │ │          │ │              │ │          │ │quote-post│
 └──────────┘ └──────────┘ └──────────┘ └──────────────┘ └──────────┘ └──────────┘
 ```
@@ -71,6 +71,7 @@ See each skill's `SKILL.md` for trigger phrases, inputs, and dependencies.
 | [gemini-carousel](skills/gemini-carousel/) | Slide-by-slide carousel generator with an approval gate. |
 | [quote-post](skills/quote-post/) | Claude writes the quote, Gemini recreates the image with the quote baked in. |
 | [analytics-dashboard](skills/analytics-dashboard/) | LinkedIn Analytics export to interactive React dashboard plus 5 data-backed recommendations. |
+| [instagram-scout](skills/instagram-scout/) | Search Instagram and scroll creator profiles for videos that beat their own account baseline. Ranked by outlier score and matched to your upcoming events. |
 <!-- SKILLS:END -->
 
 ## Installation
@@ -126,6 +127,7 @@ Once installed, ask Claude to help with content tasks and it will pick the right
 "Score this draft against my history" → post-scorer
 "Make me a carousel from this" → gemini-carousel
 "What should I post this week" → niche-research or content-matrix
+"Find viral reels for my launch next month" → instagram-scout
 "Turn this outlier Reel into a script" → reels-scripting
 "I need a thumbnail for 'How I fired my team'" → youtube-thumbnail
 "Write me a pinned comment" → pinned-comment
@@ -151,6 +153,7 @@ Once installed, ask Claude to help with content tasks and it will pick the right
 - `quote-post` — two-step quote workflow
 
 ### Instagram Reels
+- `instagram-scout` — search and profile-scroll Instagram for outlier videos, ranked against your upcoming events
 - `reels-scripting` — Apify + Gemini 2.5 Flash reference analysis, newsletter-aligned script
 
 ### YouTube
@@ -168,7 +171,7 @@ A few skills need external services. Set these environment variables before use:
 
 | Variable | Needed for |
 |---|---|
-| `APIFY_API_TOKEN` | post-scorer, reels-scripting |
+| `APIFY_API_TOKEN` | post-scorer, reels-scripting, instagram-scout (fallback only) |
 | `GOOGLE_AI_API_KEY` | reels-scripting (Gemini 2.5 Flash video analysis) |
 
 Set them with:
