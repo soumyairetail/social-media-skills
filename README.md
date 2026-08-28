@@ -19,17 +19,17 @@ Skills are markdown files that give AI agents specialised knowledge and workflow
 Every skill reads shared context. The `voice-builder` skill is the foundation. Every other skill checks it first (via `about-me.md` and `voice.md`) before drafting a line.
 
 ```
-                    ┌──────────────────────────────────┐
+                    ┌──────────────────────────────────────┐
                     │           voice-builder              │
                     │   about-me.md + voice.md             │
                     │   (read by every skill below)        │
-                    └──────────────────┬───────────────┘
+                    └──────────────────┬───────────────────┘
                                        │
-                    ┌──────────────────▼───────────────┐
+                    ┌──────────────────▼───────────────────┐
                     │         newsletter-voice             │
                     │   newsletter-voice.md                │
                     │   (the source every piece comes from)│
-                    └──────────────────┬───────────────┘
+                    └──────────────────┬───────────────────┘
                                        │
      ┌────────────┬────────────┬───────┴───────┬────────────┬────────────┐
      ▼            ▼            ▼               ▼            ▼            ▼
