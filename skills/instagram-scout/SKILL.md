@@ -17,7 +17,15 @@ This skill needs live access to Instagram. Use this order of preference:
 1. **Claude for Chrome extension** (preferred). Instagram gates most content behind a login wall, so a logged-in browser session sees far more than any anonymous fetch. Check the extension is enabled and Claude has permission to act on the current tab. If not, tell the user:
    > Enable the Claude for Chrome extension, open Instagram in a tab and make sure you are logged in. I need to drive the browser to search, scroll profiles and read view counts.
 2. **Playwright MCP** with an existing logged-in profile, if Claude for Chrome is not available.
-3. **Apify** as a data-only fallback, if `APIFY_API_TOKEN` is set. Use `apify/instagram-scraper` for profiles and hashtags and `apify/instagram-reel-scraper` for Reels. This returns metrics without visual scanning, so hooks and thumbnails cannot be assessed.
+3. **Apify** as a data-only fallback, if `APIFY_API_TOKEN` is set. Run the bundled script, which handles the scraping, the median baseline and the scoring in one pass:
+
+   ```bash
+   npm install apify-client
+   export APIFY_API_TOKEN=your_token
+   node scripts/scout.js --handles=acct1,acct2 --hashtags=tag1 --days=90 --out=scout.md
+   ```
+
+   It writes a ranked table and prints each account's median so you can sanity-check the baseline. This path returns metrics without visual scanning, so hooks and thumbnails cannot be assessed. Carry its output into Step 5 and rank the rows against the user's events yourself.
 
 Pick the best available path and continue. If none are available, say exactly which one is missing and stop. Never guess at view counts.
 
